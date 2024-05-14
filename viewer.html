@@ -100,7 +100,23 @@
         console.error('Error adding document: ', error);
       }
     });
+
+
   </script>
+
+  <!--Retrieving the drawer question and ready for guess-->
+  <script>
+    let drawerQuestionRef = database.ref('/drawer-question') 
+    console.log("Full question object")
+    console.log(drawerQuestionRef)
+
+    drawerQuestionRef.once('value',function(snapshot){
+      var data = snapshot.val()
+      console.log("data::::")
+      console.log(data)
+    })
+  </script>
+  <!-- Retrieving the drawer question-->
   
   
   
