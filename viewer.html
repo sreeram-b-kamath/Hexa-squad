@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewer-Dashboard</title>
+    <link rel="stylesheet" href="viewer.css">
+
+</head>
+<body>
+
+    <form id="viewer-form">
+        <input type="text" id="name" placeholder="Username" required><br>
+        <input type="text" id="viewer-form" placeholder="Predict Name" required><br>
+        <!-- <input type="file" name="scribble-image" id="scribble-image" accept="image/png, image/jpeg" required><br> -->
+
+        <button type="submit" onclick="">Submit</button>
+      </form>
+
+      <div style="width: 800px; height: 400px;" id="wt-container"></div>
+      
+    
+</body>
+
+<script src="https://www.whiteboard.team/dist/api.js"></script>
+    <script type="text/javascript">
+        var wt = new api.WhiteboardTeam('#wt-container', {
+            clientId: '51a4013c35cc0835339357ada81f1458',
+            boardCode: '61249e0-feca-4acb-8483-66cf47dad409-pz3r0',
+            participant: {
+                role : 'viewer',
+                name : 'Hari' //change this username with respect to login.
+            },
+            board: {
+                tool: 'pen',
+
+            }
+        });
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+<script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyDSPmxx3T3NydlQlFwA5lfctSR-7vEonv8",
+    authDomain: "hexa-squad.firebaseapp.com",
+    databaseURL: "https://hexa-squad-default-rtdb.firebaseio.com",
+    projectId: "hexa-squad",
+    storageBucket: "hexa-squad.appspot.com",
+    messagingSenderId: "550225963727",
+    appId: "1:550225963727:web:81fa3b4bb3feae38d425ba",
+    measurementId: "G-LZXR9GNSH7"
+  };
+   firebase.initializeApp(firebaseConfig);
+</script>
+
+<script>
+    const database = firebase.database();
+  
+    document.getElementById('viewer-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      const name = document.getElementById('name').value; // username local storage ninn kittanam..
+      const predictName = document.getElementById('predict-name').value;
+  
+      try {
+        await database.ref('scrible-result').push({
+          name: name,
+          predictName: predictName,
+        });
+        console.log('Data added successfully!');
+
+        //Form reset cheyyanulla code add cheyynm..
+
+        document.getElementById('viewer-form').reset();
+      } catch (error) {
+        console.error('Error adding document: ', error);
+      }
+    });
+  </script>
+  
+  
+  
+
+</html>
