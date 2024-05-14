@@ -20,7 +20,7 @@
       <form class="form" id="viewer-form" class="">
         <input class="form-control" type="text" id="username" placeholder="Username" required><br>
         <input class="form-control" type="text" id="predict-name" placeholder="Predict Name" required><br>
-        <button class="btn btn-warning text-white" type="submit" onclick="">Submit</button>
+        <button class="btn btn-warning text-white" type="submit" onclick="checkGuess()">Submit</button>
       </form>
     </div>
     
@@ -50,6 +50,9 @@
         });
 </script>
 
+
+<!-- Firebase Configurations-->
+
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 
@@ -74,14 +77,20 @@
     document.getElementById('viewer-form').addEventListener('submit', async (e) => {
       e.preventDefault();
   
-      const name = document.getElementById('name').value; // username local storage ninn kittanam..
+      const username = document.getElementById('username').value; // username local storage ninn kittanam..
+      //
+
+      // const name = localStorageil ninn edukkunnath
+
+      //
       const predictName = document.getElementById('predict-name').value;
   
       try {
-        await database.ref('scrible-result').push({
-          name: name,
+        await database.ref('viewer-guesses').push({
+          username: username,
           predictName: predictName,
         });
+        
         console.log('Data added successfully!');
 
         //Form reset cheyyanulla code add cheyynm..
