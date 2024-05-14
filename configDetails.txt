@@ -1,2 +1,3 @@
 1. hexa-squad-user-auth : name of the user authentication database for login and signup.
 2. api for user authentication : https://hexa-squad-default-rtdb.firebaseio.com/hexa-squad-user-auth
+3. Firebase cdn version : strictly use (8.6.8)
