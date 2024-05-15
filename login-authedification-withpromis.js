@@ -53,7 +53,7 @@ form.addEventListener('submit', async (event) => {
       // Ivde nmk local set and routing kodukknm - Hari
       // conflit vana nen nan kolum  - jobin
       // conflit varum..But we'll resolve dude.. All is well nn alle.. - Hari
-      localStorage.setItem(username, username);
+      localStorage.setItem("username", username);
 
 
 
