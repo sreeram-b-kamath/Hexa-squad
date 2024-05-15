@@ -107,14 +107,49 @@
   <!--Retrieving the drawer question and ready for guess-->
   <script>
     let drawerQuestionRef = database.ref('/drawer-question') 
-    console.log("Full question object")
-    console.log(drawerQuestionRef)
+    // console.log("Full question object")
+    // console.log(drawerQuestionRef)
 
-    drawerQuestionRef.once('value',function(snapshot){
-      var data = snapshot.val()
-      console.log("data::::")
-      console.log(data)
+    let data;
+    let keys;
+
+    drawerQuestionRef.on('value',function(snapshot){
+      data = snapshot.val()
+      // console.log("data::::")
+      // console.log(data)
+      keys = Object.keys(data)
+
+      console.log(data[keys[0]].question) // Fetch the top data from the question database..
+
+      console.log("question data only")
+      
+      // Checking guess word with real question..
+      // let predictionName = document.getElementById('predict-name').value
+
+      // if(data[keys[0]].question===predictionName){
+      //   console.log("Correct prediction")
+      // }
+      // else{
+      //   console.log("wrong prediction")
+      // }
+
     })
+
+
+    const checkGuess=()=>{
+
+      let predictionName = document.getElementById('predict-name').value
+
+      if(data[keys[0]].question===predictionName){
+        console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
+        console.log("Correct prediction")
+      }
+      else{
+        console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
+        console.log("wrong prediction")
+      }
+    }
+
   </script>
   <!-- Retrieving the drawer question-->
   
