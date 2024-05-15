@@ -35,19 +35,20 @@
 </body>
 
 <script src="https://www.whiteboard.team/dist/api.js"></script>
-    <script type="text/javascript">
-        var wt = new api.WhiteboardTeam('#wt-container', {
-            clientId: '51a4013c35cc0835339357ada81f1458',
-            boardCode: '61249e0-feca-4acb-8483-66cf47dad409-pz3r0',
-            participant: {
-                role : 'viewer',
-                name : 'Hari' //change this username with respect to login.
-            },
-            board: {
-                tool: 'pen',
 
-            }
-        });
+<script type="text/javascript">
+    var wt = new api.WhiteboardTeam('#wt-container', {
+        clientId: '51a4013c35cc0835339357ada81f1458',
+        boardCode: '61249e0-feca-4acb-8483-66cf47dad409-pz3r0',
+        participant: {
+            role : 'viewer',
+            name : 'Hari' //change this username with respect to login.
+        },
+        board: {
+            tool: 'pen',
+
+        }
+    });
 </script>
 
 
@@ -113,6 +114,9 @@
 
     let data;
     let keys;
+    let questionWordLength;
+    let predictNameInput = document.getElementById('predict-name')
+    console.log(predictNameInput)
 
     drawerQuestionRef.on('value',function(snapshot){
       data = snapshot.val()
@@ -124,18 +128,20 @@
 
       console.log("question data only")
       
-      // Checking guess word with real question..
-      // let predictionName = document.getElementById('predict-name').value
 
-      // if(data[keys[0]].question===predictionName){
-      //   console.log("Correct prediction")
-      // }
-      // else{
-      //   console.log("wrong prediction")
-      // }
+
+
+      questionWordLength = data[keys[0]].question.length // Question wordnte length nokkunnu..
+      predictNameInput.maxLength = questionWordLength  // Aa length inputnte max length aaki set chyynu..
+      console.log(predictNameInput.maxLength)
+      console.log(data[keys[0]].question," :: ",questionWordLength)
+      
+      
 
     })
 
+    
+    
 
     const checkGuess=()=>{
 
@@ -150,6 +156,7 @@
         console.log("wrong prediction")
       }
     }
+
 
   </script>
   <!-- Retrieving the drawer question-->
