@@ -115,26 +115,31 @@
     let data;
     let keys;
     let questionWordLength;
+
     let predictNameInput = document.getElementById('predict-name')
-    console.log(predictNameInput)
+    // console.log(predictNameInput)
+
+    // console.log(drawerQuestionRef)
 
     drawerQuestionRef.on('value',function(snapshot){
       data = snapshot.val()
-      // console.log("data::::")
-      // console.log(data)
+      //  console.log("data::::")
+      //  console.log(data)
       keys = Object.keys(data)
 
-      console.log(data[keys[0]].question) // Fetch the top data from the question database..
+      // console.log("Key :: ",keys)
 
-      console.log("question data only")
+      // console.log(data[keys[0]].question) // Fetch the top data from the question database..
+
+      // console.log("question data only")
       
 
 
 
       questionWordLength = data[keys[0]].question.length // Question wordnte length nokkunnu..
       predictNameInput.maxLength = questionWordLength  // Aa length inputnte max length aaki set chyynu..
-      console.log(predictNameInput.maxLength)
-      console.log(data[keys[0]].question," :: ",questionWordLength)
+      // console.log(predictNameInput.maxLength)
+      // console.log(data[keys[0]].question," :: ",questionWordLength)
       
       
 
@@ -148,12 +153,12 @@
       let predictionName = document.getElementById('predict-name').value
 
       if(data[keys[0]].question===predictionName){
-        console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
-        console.log("Correct prediction")
+        // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
+        console.log("Correct prediction") // Update score function
       }
       else{
-        console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
-        console.log("wrong prediction")
+        // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
+        console.log("wrong prediction") //Display this is wrong prediction
       }
     }
 
