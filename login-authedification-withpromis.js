@@ -6,8 +6,10 @@ const getUserDataRef = () => {
   return new Promise((resolve, reject) => {
     try {
       // Get a reference to the user data in the database
-      const userRef = database.ref('hexa-squad-user-auth/qweqererfwefew');
+      const userRef = database.ref('users');
+      console.log(userRef)
       resolve(userRef);
+      
     } catch (error) {
       reject(`Error getting user data reference: ${error}`);
     }
@@ -28,10 +30,16 @@ form.addEventListener('submit', async (event) => {
   try {
     // Get a reference to the user data in the database
     const userRef = await getUserDataRef();
+    userRef.on('child_added', async (snapshot) => {
+      const userData = snapshot.val();
+      console.log(typeof(userData));
+      console.log(userData.username);
 
     // Read the user data from the database
-    const snapshot = await userRef.once('value');
-    const userData = snapshot.val();
+    // const snapshot = await userRef.once('value');
+    // const userData = snapshot.val();
+    console.log(userRef)
+
     console.log(typeof(userData));
     console.log(typeof(userData.username));
     console.log(typeof(username));
@@ -45,6 +53,8 @@ form.addEventListener('submit', async (event) => {
       // Ivde nmk local set and routing kodukknm - Hari
       // conflit vana nen nan kolum  - jobin
       // conflit varum..But we'll resolve dude.. All is well nn alle.. - Hari
+      localStorage.setItem(username, username);
+
 
 
     } else {
@@ -54,6 +64,7 @@ form.addEventListener('submit', async (event) => {
       // Athreoll..
 
     }
+  });
   } catch (error) {
     console.error(error);
   }
