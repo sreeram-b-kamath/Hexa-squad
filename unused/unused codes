@@ -1,0 +1,68 @@
+
+         // Wait for the toolbar to be available
+    //      var checkExist = setInterval(function() {
+    //         var toolbar = document.querySelector('.toolbar-tools');
+    //         if (toolbar) {
+    //             // Once toolbar is available, hide it
+    //             toolbar.style.display = 'none';
+    //             clearInterval(checkExist); // Stop checking once found
+    //         }
+    //     }, 100); // Check every 100 milliseconds
+    // }
+
+    // // Call the function when the page has finished loading
+    // window.addEventListener('load', initializeWhiteboardAndHideToolbar);
+    function hideToolbar() {
+        // Select the toolbar element
+        console.log("before haaaaaaa")
+        var toolbar = document.querySelector('#whiteboard_team');
+        console.log("Toolbar::")
+        console.log(toolbar)
+        if (toolbar) {
+            var toolbar1= toolbar.contentWindow;
+            console.log("toolbar1")
+            console.log(toolbar1)
+            var toolbar2= toolbar1.document;
+            console.log("toolbar2")
+            console.log(toolbar2)
+            var toolbar3= toolbar2.querySelector('.unselectable')
+            console.log("toolbar3")
+            console.log(toolbar3)
+            // Hide the toolbar
+            toolbar3.style.display = 'none';
+        }
+
+        var iframe = document.getElementById('whiteboard_team'); // Replace 'your-iframe-id' with the actual ID of your iframe
+
+        // Check if the iframe is loaded
+        if (iframe && iframe.contentDocument) {
+            // Select the toolbar element within the iframe
+            var toolbar = iframe.contentDocument.querySelector('.toolbar-tools');
+console.log("here i frame loaded")
+            if (toolbar) {
+                // Hide the toolbar
+                toolbar.style.display = 'none';
+            }
+        }
+    }
+
+
+
+    // Initialize a MutationObserver to watch for changes in the DOM
+    var observer = new MutationObserver(function(mutationsList, observer) {
+        // Check each mutation
+        setTimeout(function(){
+            for(var mutation of mutationsList) {
+        //   console.log(mutation)
+        //   console.log(document.body.innerHTML)  
+            // If nodes are added to the DOM and they include the toolbar, hide it
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                hideToolbar();
+                console.log("HAHAHHAHAHAHAHHAHAHHAHAHAHAHAHHAHA")
+                console.log(mutation.addedNodes)
+            }}
+        },10000);
+    });
+
+    // Start observing changes to the body (or any parent element where the toolbar might be added)
+    observer.observe(document.body, { childList: true, subtree: true });

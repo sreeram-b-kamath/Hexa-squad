@@ -1,0 +1,55 @@
+body {
+    background: url("/asset/backgrounds/thunder.gif");
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lobby-container{
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.lobby-heading h1 {
+    font-size: 4em;
+
+}
+
+.lobby-heading h3 {
+    font-size: 2em;
+}
+
+.lobby-top-header {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.295);
+    align-items: center;
+    text-align: center;
+}
+
+.lobby-middle {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.lobby-room {
+    padding: 20px;
+        
+}
+
+.row1 {
+    padding: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
