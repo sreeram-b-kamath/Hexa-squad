@@ -18,58 +18,29 @@
         </div>
         <div class="lboard-wrap">
             <div class="lboard-item">
-                <div class="lboard-mem">
-                    <div class="img">
-                        <img src="assets/avatar1.jpg" alt="picture1" />
-                    </div>
-                    <div class="name-bar">
-                        <p><span>1.</span>Hari</p>
-                        <div class="bar-wrap">
-                            <div class="inner-bar" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <div class="points">999 points</div>
-                </div>
-                <div class="lboard-mem">
-                    <div class="img">
-                        <img src="assets/avatar2.jpg" alt="picture3" />
-                    </div>
-                    <div class="name-bar">
-                        <p><span>2.</span>Joel</p>
-                        <div class="bar-wrap">
-                            <div class="inner-bar" style="width: 65%"></div>
-                        </div>
-                    </div>
-                    <div class="points">666 points</div>
-                </div>
-                <div class="lboard-mem">
-                    <div class="img">
-                        <img src="assets/avatar3.jpg" alt="picture3" />
-                    </div>
-                    <div class="name-bar">
-                        <p><span>3.</span>Sree</p>
-                        <div class="bar-wrap">
-                            <div class="inner-bar" style="width: 70%"></div>
-                        </div>
-                    </div>
-                    <div class="points">777 points</div>
-                </div>
-                <div class="lboard-mem">
-                    <div class="img">
-                        <img src="assets/avatar1.jpg" alt="picture4" />
-                    </div>
-                    <div class="name-bar">
-                        <p><span>4.</span>Jobin</p>
-                        <div class="bar-wrap">
-                            <div class="inner-bar" style="width: 30%"></div>
-                        </div>
-                    </div>
-                    <div class="points">333 points</div>
-                </div>
+                <!-- User details will be dynamically added here -->
             </div>
         </div>
     </div>
 </div>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <!-- Your Firebase configuration -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDSPmxx3T3NydlQlFwA5lfctSR-7vEonv8",
+        authDomain: "hexa-squad.firebaseapp.com",
+        databaseURL: "https://hexa-squad-default-rtdb.firebaseio.com",
+        projectId: "hexa-squad",
+        storageBucket: "hexa-squad.appspot.com",
+        messagingSenderId: "550225963727",
+        appId: "1:550225963727:web:81fa3b4bb3feae38d425ba",
+        measurementId: "G-LZXR9GNSH7",
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
 <script src="scripts/leaderboard-screen.js"></script>
 </body>
 </html>
