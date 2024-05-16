@@ -4,53 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viewer-Dashboard</title>
-    <link rel="stylesheet" href="viewer.css">
+    <link rel="stylesheet" href="./styles/viewer.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 
 </head>
+
+
+
 <body class="body-class">
-  <div class="d-flex row justify-items-between m-5 gap-3">
+  <div class="d-flex row justify-items-center m-5 gap-3">
 
     <div class="d-flex column justify-items-center align-items-center p-3">
-      <div style="width: 800px; height: 400px;" id="wt-container"></div>
+      <div style="" id="wt-container"></div>
     </div>
 
     <div class="d-flex column justify-items-center align-items-center p-3">
       <form class="form" id="viewer-form" class="">
-        <input class="form-control" type="text" id="username" placeholder="Username" required><br>
+        <!-- <input class="form-control" type="text" id="username" placeholder="Username" required><br> -->
         <input class="form-control" type="text" id="predict-name" placeholder="Predict Name" required><br>
         <button class="btn btn-warning text-white" type="submit" onclick="checkGuess()">Submit</button>
       </form>
     </div>
     
-  </div>
-
-    
-
-      
-      
-      
+  </div>   
     
 </body>
 
 <script src="https://www.whiteboard.team/dist/api.js"></script>
 
 <script type="text/javascript">
-    var wt = new api.WhiteboardTeam('#wt-container', {
-        clientId: '51a4013c35cc0835339357ada81f1458',
-        boardCode: '61249e0-feca-4acb-8483-66cf47dad409-pz3r0',
-        participant: {
-            role : 'viewer',
-            name : 'Hari' //change this username with respect to login.
-        },
-        board: {
-            tool: 'pen',
-
-        }
-    });
+    
 </script>
 
+<script src="./scripts/viewer.js"></script>
 
 <!-- Firebase Configurations-->
 
@@ -155,10 +142,16 @@
       if(data[keys[0]].question===predictionName){
         // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
         console.log("Correct prediction") // Update score function
+
+        updateScoreBoard(username)
+
+        //Also add Correct prediction alert to front end
+
       }
       else{
         // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
         console.log("wrong prediction") //Display this is wrong prediction
+        // Add wrong prediction alert to front end
       }
     }
 

@@ -1,0 +1,31 @@
+
+
+.body-class{
+    background: url('../assets/bg-image.gif');
+    /* background-color: aquamarine; */
+}
+
+#wt-container{
+    border: 10px solid #000;
+    width: 45vw;
+    height: 80vh;
+    
+}
+
+#viewer-form input{
+    border : none;
+    width: 100%;
+    border-bottom: 3px solid rgb(135, 212, 222);
+    color :rgb(135, 212, 222);
+    background-color: transparent;
+}
+
+#viewer-form button{
+    border : none !important;
+    background-color: rgb(135, 212, 222);
+}
+#viewer-form button:hover{
+    border : none !important;
+    background-color: #fff;
+    color: #000;
+}
