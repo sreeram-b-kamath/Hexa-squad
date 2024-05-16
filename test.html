@@ -1,73 +1,18 @@
+<audio id="my_audio" src="your-audio-file.mp3" loop="loop"></audio>
+<script>
+    window.onload = function() {
+        document.getElementById("my_audio").play();
+    };
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Game</title>
-    <link rel="stylesheet" href="test.css">
-    <script src="test.js"></script>
-
+    <title>Document</title>
 </head>
-
 <body>
-
-    <div class="main-container">
-        <div class="drawing-board">
-            <canvas id="drawing-canvas"></canvas>
-            <button id="clear"> clear </button>
-            <script>
-                const canvas = document.getElementById('drawing-canvas');
-                const ctx = canvas.getContext('2d');
-                const clearButton = document.getElementById('clear');
-                let drawing = false;
-                let prevMousePos;
-
-                // Set up the canvas context
-                ctx.lineWidth = 5;
-                ctx.strokeStyle = 'black';
-
-                // Listen for mouse events
-                canvas.addEventListener('mousedown', (e) => {
-                    drawing = true;
-                    prevMousePos = getMousePos(canvas, e);
-                });
-
-                canvas.addEventListener('mousemove', (e) => {
-                    if (drawing) {
-                        drawLine(prevMousePos, getMousePos(canvas, e));
-                        prevMousePos = getMousePos(canvas, e);
-                    }
-                });
-
-                canvas.addEventListener('mouseup', () => {
-                    drawing = false;
-                });
-
-                // Clear the canvas
-                clearButton.addEventListener('click', () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                });
-
-                // Get the mouse position
-                function getMousePos(canvas, evt) {
-                    const rect = canvas.getBoundingClientRect();
-                    const root = document.documentElement;
-                    const mouseX = evt.clientX - rect.left - root.scrollLeft;
-                    const mouseY = evt.clientY - rect.top - root.scrollTop;
-                    return { x: mouseX, y: mouseY };
-                }
-
-                // Draw a line between two points
-                function drawLine(from, to) {
-                    ctx.beginPath();
-                    ctx.moveTo(from.x, from.y);
-                    ctx.lineTo(to.x, to.y);
-                    ctx.stroke();
-                }
-            </script>
-        </div>
-    </div>
+    
 </body>
-
 </html>

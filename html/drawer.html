@@ -6,9 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hexa-Squad-Scribble-Drawer</title>
     <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDSPmxx3T3NydlQlFwA5lfctSR-7vEonv8",
+        authDomain: "hexa-squad.firebaseapp.com",
+        databaseURL: "https://hexa-squad-default-rtdb.firebaseio.com",
+        projectId: "hexa-squad",
+        storageBucket: "hexa-squad.appspot.com",
+        messagingSenderId: "550225963727",
+        appId: "1:550225963727:web:81fa3b4bb3feae38d425ba",
+        measurementId: "G-LZXR9GNSH7",
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
+
+
+<script>
+    const whiteboard = new Whiteboard('my-whiteboard');
+
+    function clearWhiteboard() {
+        wt.board.clear();
+    }
+</script>
+
+
 </head>
 
 <body>
+    <audio id="my_audio" src="" loop="loop"></audio>
+<script>
+    window.onload = function() {
+        document.getElementById("my_audio").play();
+    };
+</script>
+
+    <div id="my-whiteboard"></div>
+    <button onclick="clearWhiteboard()">Clear Whiteboard</button>
+
+
+
     <div class="drawer-canvas">
         <div class="sidebar-left">
             <div id="wt-container">
@@ -21,16 +63,34 @@
     <div class="drawer-display">
         <div class="sidebar-right">
             <div class="the-word">
-                <h2>Here Comes Your Word</h2>
-            </div>
+                <h2 id="guess-word" class="text-light fs-1"></h2>
 
+            </div>
+<!-- 
             <div class="submit button">
                 <button type="submit">Cheyyada Submit</button>
-            </div>
+            </div> -->
 
 
         </div>
     </div>
+    <script>
+
+        database=firebase.database();
+        let currentWordRefer = database.ref('/drawer-question')
+
+        currentWordRefer.limitToLast(1).once('value', function (snapshot) {
+            let data = snapshot.val();
+
+            let keys = Object.keys(data);
+            console.log(keys)
+            let wordlength = Object.keys(data).length;
+            console.log(wordlength)
+             let currentWord = data[keys].question;
+             document.getElementById("guess-word").textContent=currentWord;
+        });
+    </script>
+
 </body>
 
 

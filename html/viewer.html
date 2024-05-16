@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Viewer-Dashboard</title>
+    <link rel="stylesheet" href="/Styles/viewer.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+
+
+</head>
+
+<body class="body-class">
+
+    <div class="d-flex row justify-items-center m-5 gap-3">
+        <div class="d-flex column justify-items-center align-items-center p-3">
+            <div class="zindex>">
+                <div class="g">
+                    <div id="wt-container">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="backgcolor">
+            <div class="justify-items-center align-items-center p-3" id="right-panel">
+
+                <div id="game-clue">
+                    <h1 id="word">
+
+                    </h1>
+                </div>
+                <form class="form" id="viewer-form" class="">
+                    <!-- <input class="form-control" type="text" id="username" placeholder="Username" required><br> -->
+                    <input class="form-control" type="text" id="predict-name" placeholder="Predict Name"
+                        required /><br />
+                    <button class="btn btn-warning text-white" type="submit" onclick="checkGuess()">
+                        Submit
+                    </button>
+                    <div class="" id="no-item"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://www.whiteboard.team/dist/api.js"></script>
+
+<script type="text/javascript"></script>
+
+<script src="/scripts/viewer.js"></script>
+<script>
+    const wt = new Whiteboard({
+      apiKey: 'YOUR_API_KEY'
+    });
+
+    function clearBoard() {
+      wt.board.clear();
+    }
+  </script>
+
+<!-- Firebase Configurations-->
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDSPmxx3T3NydlQlFwA5lfctSR-7vEonv8",
+        authDomain: "hexa-squad.firebaseapp.com",
+        databaseURL: "https://hexa-squad-default-rtdb.firebaseio.com",
+        projectId: "hexa-squad",
+        storageBucket: "hexa-squad.appspot.com",
+        messagingSenderId: "550225963727",
+        appId: "1:550225963727:web:81fa3b4bb3feae38d425ba",
+        measurementId: "G-LZXR9GNSH7",
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
+
+<script>
+    // const database = firebase.database();
+
+    // document
+    //     .getElementById("viewer-form")
+    //     .addEventListener("submit", async (e) => {
+    //         e.preventDefault();
+
+    //         //const username = document.getElementById('username').value; // username local storage ninn kittanam..
+    //         //
+    //         const username = localStorage.getItem("username");
+
+    //         // const name = localStorageil ninn edukkunnath
+
+    //         //
+    //         const predictName = document.getElementById("predict-name").value;
+
+    //         try {
+    //             await database.ref("viewer-guesses").push({
+    //                 username: username,
+    //                 predictName: predictName,
+    //             });
+
+    //             console.log("Data added successfully!");
+
+    //             //Form reset cheyyanulla code add cheyynm..
+
+    //             document.getElementById("viewer-form").reset();
+    //         } catch (error) {
+    //             console.error("Error :: ", error);
+    //         }
+    //     });
+</script>
+
+<!--Retrieving the drawer question and ready for guess Hari-->
+<script>
+
+const database = firebase.database();
+
+    document
+        .getElementById("viewer-form")
+        .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            //const username = document.getElementById('username').value; // username local storage ninn kittanam..
+            //
+            const username = localStorage.getItem("username");
+
+            // const name = localStorageil ninn edukkunnath
+
+            //
+            const predictName = document.getElementById("predict-name").value;
+
+            try {
+                await database.ref("viewer-guesses").push({
+                    username: username,
+                    predictName: predictName,
+                });
+
+                console.log("Data added successfully!");
+
+                //Form reset cheyyanulla code add cheyynm..
+
+                document.getElementById("viewer-form").reset();
+            } catch (error) {
+                console.error("Error :: ", error);
+            }
+        }); 
+
+
+
+
+    let drawerQuestionRef = database.ref("/drawer-question");
+    // console.log("Full question object")
+    // console.log(drawerQuestionRef)
+
+    let data;
+    let keys;
+    let questionWordLength;
+
+    let predictNameInput = document.getElementById("predict-name");
+    // console.log(predictNameInput)
+
+    // console.log(drawerQuestionRef)
+
+    drawerQuestionRef.limitToLast(1).on("value", function (snapshot) {
+        data = snapshot.val();
+        //  console.log("data::::")
+        //  console.log(data)
+        keys = Object.keys(data);
+
+        // console.log("Key :: ",keys)
+
+        // console.log(data[keys[0]].question) // Fetch the top data from the question database..
+
+        // console.log("question data only")
+
+        questionWordLength = data[keys].question.length; // Question wordnte length nokkunnu..
+        console.log(questionWordLength);
+        console.log(data[keys]);
+        predictNameInput.maxLength = questionWordLength; // Aa length inputnte max length aaki set chyynu..
+        // console.log(predictNameInput.maxLength)
+        // console.log(data[keys[0]].question," :: ",questionWordLength)
+    });
+
+    const checkGuess = () => {
+        // e.preventDefault();
+
+        let predictionName = document.getElementById("predict-name").value;
+
+        console.log(predictionName)
+        if (predictionName === '') {
+            // document.getElementById('no-item').innerHTML = "<p>Enter guess</p>"
+            // alert('Enter guess')
+
+            return
+
+
+        }
+        console.log(data[keys].length)
+
+        if (data[keys[keys.length-1]].question === predictionName) {
+            // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
+            console.log("Correct prediction"); // Update score function
+            const username = localStorage.getItem("username");
+
+            updateScoreBoard(username);
+
+            // Imp : Also add Correct prediction alert to front end
+
+            document.getElementById("viewer-form").style.display = "none";
+
+            document.getElementById(
+                "right-panel"
+            ).innerHTML = `<div class="alert alert-success" role="alert">
+                        Correct prediction..!
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-success" onclick="exitGame()">Exit Game</button>
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-warning" onclick="loadLobby()">Lobby</button>
+                        </div>`;
+        } else {
+            // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
+            console.log("wrong prediction"); //Display this is wrong prediction
+            // Imp: Add wrong prediction alert to front end
+
+            document.getElementById("viewer-form").style.display = "none";
+
+            document.getElementById(
+                "right-panel"
+            ).innerHTML = `<div class="alert alert-danger" role="alert">
+                        Wrong prediction..!
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-danger" onclick="exitGame()">Exit Game</button>
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-warning" onclick="loadLobby()">Lobby</button>
+                        </div>`;
+        }
+    };
+
+    const exitGame = () => {
+        window.location.href = "./feedback.html"; // File location correct aano check chyynm..
+    };
+    const loadLobby = () => {
+        window.location.href = "./lobby.html"; // File location correct aano check chyynm..
+    };
+// we had a /script here
+// Retrieving the drawer question
+
+
+// CHOOSE WORD FRONTEND STUFF Joel 
+//we had a script here
+    // let database=firebase.database();
+    let currentWord;
+    let guessWord = '';
+    let wordInterval;
+    let wordIndex = 0;
+    let wordLength;
+
+
+    //choosing the word to draw
+    // const chooseWord = () => {
+    //     let wordRefer = database.ref('/words');
+    //     wordRefer.once('value', function (snapshot) {
+    //         data = snapshot.val()
+    //         data.splice(0, 1);
+
+    //         wordLength = Object.keys(data).length;
+    //         const randomIndex = Math.floor(Math.random() * wordLength);
+    //         currentWord = data[randomIndex];
+
+    //         database.ref('/drawer-question').push({ "question": currentWord })
+    //     })
+    // }
+    // // chooseWord();
+    startInterval();
+
+    function shuffleWord(word) {
+        return word.split('').sort(() => Math.random() - 0.5).join('');
+    }
+
+
+
+    function startInterval() {
+        // Execute myFunction every n second
+        let currentWordRefer = database.ref('/drawer-question')
+        let data;
+        let currentWord;
+        let wordlength;
+try{
+        currentWordRefer.limitToLast(1).once('value', function (snapshot) {
+            data = snapshot.val();
+
+            keys = Object.keys(data);
+            console.log(keys)
+            wordlength = Object.keys(data).length;
+            console.log(wordlength)
+            currentWord = data[keys].question;
+            console.log(currentWord);
+            const wordLength = currentWord.length;
+            const shuffledIndices = shuffleIndices(wordLength);
+            let wordGap = "";
+            for (i = 0; i < wordLength; ++i) {
+                wordGap += "_ ";
+            }
+            console.log(wordGap)
+            document.getElementById('word').textContent = wordGap;
+            wordInterval = setInterval(() => {
+                if (wordIndex >= wordLength) {
+                    clearInterval(wordInterval);
+                    return;
+                }
+
+                // Construct the partially guessed word with random order
+                let partiallyGuessedWord = '';
+                for (let i = 0; i < wordLength; i++) {
+                    if (i <= wordIndex) {
+                        partiallyGuessedWord += currentWord[shuffledIndices[i]];
+                        // console.log(partiallyGuessedWord)// Add guessed letters in shuffled order
+                    } else {
+                        partiallyGuessedWord += '_ '; // Add underscores for unguessed letters
+                    }
+                }
+
+                // Display the partially guessed word
+                document.getElementById('word').textContent = partiallyGuessedWord;
+                wordIndex++;
+            }, 4000);
+        })
+    }
+    catch(e){
+        console.log(e);
+    }
+    }
+
+    function startWordInterval() {
+        const wordLength = 10;
+        const shuffledIndices = shuffleIndices(wordLength);
+        console.log(currentWord)
+
+        setTimeout(startInterval, 4000);
+
+    }
+    // Function to shuffle the indices of the word
+    function shuffleIndices(length) {
+        const indices = Array.from({ length: length }, (_, index) => index);
+        for (let i = indices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [indices[i], indices[j]] = [indices[j], indices[i]]; // Swap elements
+        }
+        return indices;
+    }
+
+
+    const updateScoreBoard = (username) => {
+        let scoreBoardRefer = database.ref('score-board-refer');
+        scoreBoardRefer.once('value', function (snapshot) {
+
+            data = snapshot.val();
+
+            console.log(data)
+            console.log(Object.keys(data)[0])
+            let userKey = Object.keys(data)[0]
+            console.log(data[username], "data type", typeof (data[username]));
+            currentScore = data[username];
+            ++currentScore;
+            var updateData = {};
+            updateData[username] = currentScore;
+
+            scoreBoardRefer.update(updateData)
+            currentScore = data[username];
+            console.log("new score: ", data[username]);
+            // data.username
+
+        })
+
+    }
+</script>
+
+</html>
