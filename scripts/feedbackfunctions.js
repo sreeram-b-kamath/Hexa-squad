@@ -1,10 +1,12 @@
-// import { userIdToPass } from "./login-authedification-withpromise.js";
+import { userIdToPass } from "./login-authedification-withpromise.js";
 import { firebaseConfig } from "./config.js";
 
 const feedbackFormDB = firebase.database().ref('feedback-form');
 console.log(feedbackFormDB);
 
-const stars = document.querySelectorAll('.star-rating .bi-star');
+// firebase.initializeApp(firebaseConfig);
+
+const stars = document.querySelectorAll(".star-rating .bi-star");
 let selectedRating = 0;
 let dummyName = "smith"
 
@@ -56,6 +58,39 @@ const pushFeedbackData = (userId, message, rating) => {
     });
   });
 };
+
+stars.forEach((star) => {
+  star.addEventListener("click", (e) => {
+    const rating = parseInt(e.target.getAttribute("data-rating"));
+    selectedRating = rating;
+    updateRating(rating);
+  });
+});
+
+document
+  .getElementById("feedback-form")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const feedbackContent = document.getElementById("feedback-message").value;
+
+    try {
+      await feedbackFormDB.push({
+        userId: userIDForFeedback,
+        message: feedbackContent,
+        rating: selectedRating,
+      });
+      console.log("Data added successfully!");
+      document.getElementById("feedback-form").reset();
+      selectedRating = 0; // Reset the selected rating after submission
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  });
+
+function updateRating(rating) {
+  console.log("Selected rating: ", rating);
+  // Here, you can update the UI to reflect the selected rating if needed
+}
 
 const viewFeedbacksBtn = document.getElementById("view-feedbacks");
 const feedbackListContainer = document.getElementById("feedback-list");
