@@ -29,8 +29,10 @@ form.addEventListener('submit', async (event) => {
 
   try {
     // Create an anonymous user
-    const userCredential = await firebase.auth().signInAnonymously().catch((error)=>{
+  const userCredential = await firebase.auth().signInAnonymously().catch((error)=>{
   var errorCode=error.code;
+  console.log('This is working1')
+
   var errorMessage=error.message;
 
   console.log(errorCode,errorMessage);
@@ -38,15 +40,35 @@ form.addEventListener('submit', async (event) => {
 
     // Get the user's UID
     const uid = userCredential.user.uid;
-
+    const scorebord= firebase.database().ref('scorebord');
+    // username
+    // document.addEventListener('submit', async (e) => {
+    //   e.preventDefault();
+    //   console.log('button is working');
+   
     // Store the username and password in the database
     await database.ref('users/' + uid).set({
       username: username,
       password: password
     });
-    window.location.href="login.html";
 
-    console.log('User data stored successfully');
+
+
+
+      scorebord.once('value', snapshot => {
+      let lobbyPlayers = snapshot.val() || {}; // Existing lobby players data or an empty object if there's none
+      let score=0;
+      lobbyPlayers[username] = score; // Use userName variable as key
+      console.log('This is working')
+      scorebord.set(lobbyPlayers);
+      window.location.href="login.html";
+
+
+  });
+    // window.location.href="login.html";
+
+  //   console.log('User data stored successfully');
+  // });
   } catch (error) {
     console.error('Error signing in anonymously: ', error);
   }
