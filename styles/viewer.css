@@ -29,3 +29,7 @@
     background-color: #fff;
     color: #000;
 }
+
+.wrong-prediction{
+    color: red;
+}

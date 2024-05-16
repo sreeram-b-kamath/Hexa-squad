@@ -19,12 +19,13 @@
       <div style="" id="wt-container"></div>
     </div>
 
-    <div class="d-flex column justify-items-center align-items-center p-3">
+    <div class="d-flex column justify-items-center align-items-center p-3" id="right-panel">
       <form class="form" id="viewer-form" class="">
         <!-- <input class="form-control" type="text" id="username" placeholder="Username" required><br> -->
         <input class="form-control" type="text" id="predict-name" placeholder="Predict Name" required><br>
         <button class="btn btn-warning text-white" type="submit" onclick="checkGuess()">Submit</button>
       </form>
+      
     </div>
     
   </div>   
@@ -61,7 +62,7 @@
 
 <script>
     const database = firebase.database();
-  
+    
     document.getElementById('viewer-form').addEventListener('submit', async (e) => {
       e.preventDefault();
   
@@ -86,7 +87,7 @@
 
         document.getElementById('viewer-form').reset();
       } catch (error) {
-        console.error('Error adding document: ', error);
+        console.error('Error :: ', error);
       }
     });
 
@@ -108,7 +109,7 @@
 
     // console.log(drawerQuestionRef)
 
-    drawerQuestionRef.on('value',function(snapshot){
+    drawerQuestionRef.limitToLast(1).on('value',function(snapshot){
       data = snapshot.val()
       //  console.log("data::::")
       //  console.log(data)
@@ -123,7 +124,7 @@
 
 
 
-      questionWordLength = data[keys[0]].question.length // Question wordnte length nokkunnu..
+      questionWordLength = data[keys].question.length // Question wordnte length nokkunnu..
       predictNameInput.maxLength = questionWordLength  // Aa length inputnte max length aaki set chyynu..
       // console.log(predictNameInput.maxLength)
       // console.log(data[keys[0]].question," :: ",questionWordLength)
@@ -139,19 +140,32 @@
 
       let predictionName = document.getElementById('predict-name').value
 
-      if(data[keys[0]].question===predictionName){
+      if(data[keys].question===predictionName){
         // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
         console.log("Correct prediction") // Update score function
 
-        updateScoreBoard(username)
+        // updateScoreBoard(username)
 
-        //Also add Correct prediction alert to front end
+        // Imp : Also add Correct prediction alert to front end
+
+        document.getElementById('viewer-form').style.display ="none"
+
+        document.getElementById('right-panel').innerHTML = `<div class="alert alert-success" role="alert">
+                        Correct prediction..!
+                        </div>`
 
       }
       else{
         // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
         console.log("wrong prediction") //Display this is wrong prediction
-        // Add wrong prediction alert to front end
+        // Imp: Add wrong prediction alert to front end
+
+        document.getElementById('viewer-form').style.display = "none"
+
+        document.getElementById('right-panel').innerHTML = `<div class="alert alert-danger" role="alert">
+                        Wrong prediction..!
+                        </div>`
+
       }
     }
 
