@@ -6,7 +6,7 @@
     
   }
   
-  .red-btn {
+  .draw-button {
     width: 300px;
     height: 150px;
     margin: 15px;
@@ -28,7 +28,7 @@
     z-index: 1;
     overflow: hidden;
   }
-  .blue-btn {
+  .watch-button {
     width: 300px;
     height: 150px;
     margin: 15px;
@@ -50,7 +50,7 @@
     overflow: hidden;
   }
 
-  .yellow-btn {
+  .leaderboard-button {
     width: 300px;
     height: 150px;
     margin: 15px;
