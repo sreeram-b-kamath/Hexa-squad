@@ -33,3 +33,10 @@
 .wrong-prediction{
     color: red;
 }
+
+#game-clue{
+    margin: 50px;
+    width: 150px;
+    height:30px;
+
+}
