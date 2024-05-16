@@ -23,7 +23,7 @@ const getUserDataRef = () => {
     try {
       // Get a reference to the user data in the database
       const userRef = database.ref('users');
-      console.log(userRef)
+      // console.log(userRef)
       resolve(userRef);
       
     } catch (error) {
@@ -49,19 +49,19 @@ form.addEventListener('submit', async (event) => {
     const userRef = await getUserDataRef();
     userRef.on('child_added', async (snapshot) => {
       const userData = snapshot.val();
-      console.log(typeof(userData));
-      console.log(userData.username);
+      // console.log(typeof(userData));
+      // console.log(userData.username);
 
     // Read the user data from the database
     // const snapshot = await userRef.once('value');
     // const userData = snapshot.val();
-    console.log(userRef)
+    // console.log(userRef)
 
-    console.log(typeof(userData));
-    console.log(typeof(userData.username));
-    console.log(typeof(username));
-    console.log(typeof(userData.password));
-    console.log(typeof(password));
+    // console.log(typeof(userData));
+    // console.log(typeof(userData.username));
+    // console.log(typeof(username));
+    // console.log(typeof(userData.password));
+    // console.log(typeof(password));
 
     // Check if the provided username and password match the data in the database
     if (userData.username === username && userData.password === password) {
@@ -71,10 +71,11 @@ form.addEventListener('submit', async (event) => {
       // conflit vana nen nan kolum  - jobin
       // conflit varum..But we'll resolve dude.. All is well nn alle.. - Hari
       localStorage.setItem("username", username);
-      // window.location.href="loby.html"
+      window.location.href="lobby.html"
 
     } else {
       console.log('Authentication failed');
+      window.location.href="login.html"
 
       // Ivde routing login page thanne redirect aaknm..
       // Athreoll..
