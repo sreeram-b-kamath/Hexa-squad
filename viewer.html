@@ -1,102 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Viewer-Dashboard</title>
-    <link rel="stylesheet" href="./styles/viewer.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/viewer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+  </head>
 
+  <body class="body-class">
+    <div class="d-flex row justify-items-center m-5 gap-3">
+      <div class="d-flex column justify-items-center align-items-center p-3">
+        <div style="" id="wt-container"></div>
+      </div>
 
-</head>
-
-
-
-<body class="body-class">
-  <div class="d-flex row justify-items-center m-5 gap-3">
-
-    <div class="d-flex column justify-items-center align-items-center p-3">
-      <div style="" id="wt-container"></div>
+      <div class="justify-items-center align-items-center p-3" id="right-panel">
+        <form class="form" id="viewer-form" class="">
+          <!-- <input class="form-control" type="text" id="username" placeholder="Username" required><br> -->
+          <input
+            class="form-control"
+            type="text"
+            id="predict-name"
+            placeholder="Predict Name"
+            required
+          /><br />
+          <button
+            class="btn btn-warning text-white"
+            type="submit"
+            onclick="checkGuess()"
+          >
+            Submit
+          </button>
+          <div class="" id="no-item"></div>
+        </form>
+      </div>
     </div>
+  </body>
 
-    <div class="d-flex column justify-items-center align-items-center p-3" id="right-panel">
-      <form class="form" id="viewer-form" class="">
-        <!-- <input class="form-control" type="text" id="username" placeholder="Username" required><br> -->
-        <input class="form-control" type="text" id="predict-name" placeholder="Predict Name" required><br>
-        <button class="btn btn-warning text-white" type="submit" onclick="checkGuess()">Submit</button>
-      </form>
-      
-    </div>
-    
-  </div>   
-    
-</body>
+  <script src="https://www.whiteboard.team/dist/api.js"></script>
 
-<script src="https://www.whiteboard.team/dist/api.js"></script>
+  <script type="text/javascript"></script>
 
-<script type="text/javascript">
-    
-</script>
+  <script src="./scripts/viewer.js"></script>
 
-<script src="./scripts/viewer.js"></script>
+  <!-- Firebase Configurations-->
 
-<!-- Firebase Configurations-->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-<script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script>
     const firebaseConfig = {
-    apiKey: "AIzaSyDSPmxx3T3NydlQlFwA5lfctSR-7vEonv8",
-    authDomain: "hexa-squad.firebaseapp.com",
-    databaseURL: "https://hexa-squad-default-rtdb.firebaseio.com",
-    projectId: "hexa-squad",
-    storageBucket: "hexa-squad.appspot.com",
-    messagingSenderId: "550225963727",
-    appId: "1:550225963727:web:81fa3b4bb3feae38d425ba",
-    measurementId: "G-LZXR9GNSH7"
-  };
-   firebase.initializeApp(firebaseConfig);
-</script>
+      apiKey: "AIzaSyDSPmxx3T3NydlQlFwA5lfctSR-7vEonv8",
+      authDomain: "hexa-squad.firebaseapp.com",
+      databaseURL: "https://hexa-squad-default-rtdb.firebaseio.com",
+      projectId: "hexa-squad",
+      storageBucket: "hexa-squad.appspot.com",
+      messagingSenderId: "550225963727",
+      appId: "1:550225963727:web:81fa3b4bb3feae38d425ba",
+      measurementId: "G-LZXR9GNSH7",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
-<script>
+  <script>
     const database = firebase.database();
-    
-    document.getElementById('viewer-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-  
-      //const username = document.getElementById('username').value; // username local storage ninn kittanam..
-      //
-      const username = localStorage.getItem('username')
 
-      // const name = localStorageil ninn edukkunnath
+    document
+      .getElementById("viewer-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-      //
-      const predictName = document.getElementById('predict-name').value;
-  
-      try {
-        await database.ref('viewer-guesses').push({
-          username: username,
-          predictName: predictName,
-        });
-        
-        console.log('Data added successfully!');
+        //const username = document.getElementById('username').value; // username local storage ninn kittanam..
+        //
+        const username = localStorage.getItem("username");
 
-        //Form reset cheyyanulla code add cheyynm..
+        // const name = localStorageil ninn edukkunnath
 
-        document.getElementById('viewer-form').reset();
-      } catch (error) {
-        console.error('Error :: ', error);
-      }
-    });
+        //
+        const predictName = document.getElementById("predict-name").value;
 
+        try {
+          await database.ref("viewer-guesses").push({
+            username: username,
+            predictName: predictName,
+          });
 
+          console.log("Data added successfully!");
+
+          //Form reset cheyyanulla code add cheyynm..
+
+          document.getElementById("viewer-form").reset();
+        } catch (error) {
+          console.error("Error :: ", error);
+        }
+      });
   </script>
 
   <!--Retrieving the drawer question and ready for guess-->
   <script>
-    let drawerQuestionRef = database.ref('/drawer-question') 
+    let drawerQuestionRef = database.ref("/drawer-question");
     // console.log("Full question object")
     // console.log(drawerQuestionRef)
 
@@ -104,86 +112,90 @@
     let keys;
     let questionWordLength;
 
-    let predictNameInput = document.getElementById('predict-name')
+    let predictNameInput = document.getElementById("predict-name");
     // console.log(predictNameInput)
 
     // console.log(drawerQuestionRef)
 
-    drawerQuestionRef.limitToLast(1).on('value',function(snapshot){
-      data = snapshot.val()
+    drawerQuestionRef.limitToLast(1).on("value", function (snapshot) {
+      data = snapshot.val();
       //  console.log("data::::")
       //  console.log(data)
-      keys = Object.keys(data)
+      keys = Object.keys(data);
 
       // console.log("Key :: ",keys)
 
       // console.log(data[keys[0]].question) // Fetch the top data from the question database..
 
       // console.log("question data only")
-      
 
-
-
-      questionWordLength = data[keys].question.length // Question wordnte length nokkunnu..
-      predictNameInput.maxLength = questionWordLength  // Aa length inputnte max length aaki set chyynu..
+      questionWordLength = data[keys].question.length; // Question wordnte length nokkunnu..
+      predictNameInput.maxLength = questionWordLength; // Aa length inputnte max length aaki set chyynu..
       // console.log(predictNameInput.maxLength)
       // console.log(data[keys[0]].question," :: ",questionWordLength)
-      
-      
+    });
 
-    })
+    const checkGuess = () => {
+      // e.preventDefault();
 
-    
-    
+      let predictionName = document.getElementById("predict-name").value;
 
-    const checkGuess=()=>{
+      console.log(predictionName)
+      if(predictionName===''){
+          // document.getElementById('no-item').innerHTML = "<p>Enter guess</p>"
+          // alert('Enter guess')
+          return
+          
+      }
 
-      let predictionName = document.getElementById('predict-name').value
-
-      if(data[keys].question===predictionName){
+      if (data[keys].question === predictionName) {
         // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
-        console.log("Correct prediction") // Update score function
+        console.log("Correct prediction"); // Update score function
 
         // updateScoreBoard(username)
 
         // Imp : Also add Correct prediction alert to front end
 
-        document.getElementById('viewer-form').style.display ="none"
+        document.getElementById("viewer-form").style.display = "none";
 
-        document.getElementById('right-panel').innerHTML = `<div class="alert alert-success" role="alert">
+        document.getElementById(
+          "right-panel"
+        ).innerHTML = `<div class="alert alert-success" role="alert">
                         Correct prediction..!
                         </div>
                         <div>
                           <button type="button" class="btn btn-success" onclick="exitGame()">Exit Game</button>
-                        </div>`
-
-      }
-      else{
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-warning" onclick="loadLobby()">Main Menu</button>
+                        </div>`;
+      } else {
         // console.log("data keys :: ",data[keys[0]].question,"\nPrediction name :: ",predictionName)
-        console.log("wrong prediction") //Display this is wrong prediction
+        console.log("wrong prediction"); //Display this is wrong prediction
         // Imp: Add wrong prediction alert to front end
 
-        document.getElementById('viewer-form').style.display = "none"
+        document.getElementById("viewer-form").style.display = "none";
 
-        document.getElementById('right-panel').innerHTML = `<div class="alert alert-danger" role="alert">
+        document.getElementById(
+          "right-panel"
+        ).innerHTML = `<div class="alert alert-danger" role="alert">
                         Wrong prediction..!
                         </div>
                         <div>
                           <button type="button" class="btn btn-danger" onclick="exitGame()">Exit Game</button>
-                        </div>`
-
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-warning" onclick="loadLobby()">Main Menu</button>
+                        </div>`;
       }
-    }
+    };
 
-    const exitGame=()=>{
-      window.location.href = "./feedback.html" // File location correct aano check chyynm..
-    }
-
-
+    const exitGame = () => {
+      window.location.href = "./feedback.html"; // File location correct aano check chyynm..
+    };
+    const loadLobby = () => {
+      window.location.href = "./lobby.html"; // File location correct aano check chyynm..
+    };
   </script>
   <!-- Retrieving the drawer question-->
-  
-  
-  
-
 </html>
