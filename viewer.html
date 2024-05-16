@@ -152,6 +152,9 @@
 
         document.getElementById('right-panel').innerHTML = `<div class="alert alert-success" role="alert">
                         Correct prediction..!
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-success" onclick="exitGame()">Exit Game</button>
                         </div>`
 
       }
@@ -164,9 +167,16 @@
 
         document.getElementById('right-panel').innerHTML = `<div class="alert alert-danger" role="alert">
                         Wrong prediction..!
+                        </div>
+                        <div>
+                          <button type="button" class="btn btn-danger" onclick="exitGame()">Exit Game</button>
                         </div>`
 
       }
+    }
+
+    const exitGame=()=>{
+      window.location.href = "./feedback.html" // File location correct aano check chyynm..
     }
 
 
